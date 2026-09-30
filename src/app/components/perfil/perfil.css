@@ -1,0 +1,23 @@
+.perfil {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 300px;
+  margin: 16px;
+  background-color: #f9f9f9;
+}
+
+h2 {
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.edat {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.presentacio {
+  margin-top: 8px;
+  color: #444;
+}
