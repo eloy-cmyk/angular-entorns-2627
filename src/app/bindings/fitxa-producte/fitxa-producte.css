@@ -1,0 +1,9 @@
+.esgotat{
+    color: red;
+}
+
+/* Estilo cuando el producto se ha añadido al carrito */
+.confirmat{
+    border: 2px solid #70AD47;
+    background: #f0fff0;
+}

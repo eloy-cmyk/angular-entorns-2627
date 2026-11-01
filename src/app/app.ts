@@ -6,10 +6,11 @@ import { Tarjeta } from './components/tarjeta/tarjeta';
 import { Perfil } from './components/perfil/perfil';
 import { Info } from './components/info/info';
 import { Botiga } from './bindings/botiga/botiga';
+import { FitxaProducte } from './bindings/fitxa-producte/fitxa-producte';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Tarjeta, Perfil, Info, Botiga],
+  imports: [RouterOutlet, Tarjeta, Perfil, Info, Botiga, FitxaProducte],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
