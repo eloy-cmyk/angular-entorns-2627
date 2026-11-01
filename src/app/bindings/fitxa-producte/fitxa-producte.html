@@ -1,0 +1,7 @@
+<!-- [class.esgotat] si no hay stock, [class.confirmat] si ya se ha añadido al carrito -->
+<article class="fitxa" [class.esgotat]="!teEstoc" [class.confirmat]="afegitAlCarret">
+    <h2> {{ producte.nom }} </h2>
+    <p class="preu"> {{ producte.preu }} €</p>
+    <!-- Se deshabilita si ya está añadido o si no queda stock -->
+    <button class="btn-compra" [disabled]="afegitAlCarret || !teEstoc" (click)="afegir()"> Afegir al carret </button>
+</article>
