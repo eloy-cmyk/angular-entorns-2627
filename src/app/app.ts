@@ -1,69 +1,95 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Deportista } from './interfaces/deporte';
-import { Torneo } from './interfaces/torneo';
-import { saludar, esMajorEdat, sumarArray } from './funcions';
-import { Alumne } from './alumne';
+import { Producte } from './interfaces/producte'; //PER PODER USAR LA iterface DE TIPUS Producte s'ha d'importar
+import { Producte as ProducteClass } from './producte'; //Importem la classe PRODUCTE ASSIGANT UN ALIAS
+import { Tarjeta } from './components/tarjeta/tarjeta';
+import { Perfil } from './components/perfil/perfil';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Tarjeta, Perfil],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('angular-entorns-2627');
+    //OBJECTIU DE LA SESSIÓ 2: Veure la diferència entre JS i TS --> TS = JS + tipus.
+    //ELS TIPUS no canvien com funciona el codi --> AJUDEN A DETECTAR ERRORS abans d'executar.
+    // " undefined is not a function? " --> AIXÒ ÉS EL QUE VOLEM EVITAR!!!!!
 
-  deportistas: Deportista[] = [
-    { id: 1, nombre: 'Fermín', deporte: 'Fútbol', dorsal: 7, activo: true, equipo: 'FC Barcelona' },
-    { id: 2, nombre: 'Rafael Nadal', deporte: 'Tenis', dorsal: 1, activo: false },
-    { id: 3, nombre: 'Pau Gasol', deporte: 'Baloncesto', dorsal: 16, activo: false },
-    { id: 4, nombre: 'Ricky Rubio', deporte: 'Baloncesto', dorsal: 9, activo: true, equipo: 'FC Barcelona' },
-    { id: 5, nombre: 'Lamine Yamal', deporte: 'Fútbol', dorsal: 19, activo: true, equipo: 'FC Barcelona' }
-  ];
+    /*function saluda (nom) {
+      return nom.toUpperCase();
+    }
 
-  ngOnInit(): void {
-    console.log('--- PARTE B: DEPORTISTAS ---');
-    console.log('Deportistas activos:', this.getActius());
-    console.log('Búsqueda por ID (1):', this.findById(1));
+    saluda (40);
+    --> Parameter 'nom' implicitly has an 'any' type
+    */
+
+   
+    /*function saluda(nom:string) {
+      return nom.toUpperCase();
+    }
+
+    saluda(40);
+
+    --> Argument of type 'number' is not assignable to parameter of type 'string'.
+    */
+
+    //TIPUS BASICS
+    /*nom: string = 'Angular';
+    nom2: string = 'Laravel';
+    versio : number = 20;
+    actiu: boolean = true;
+
+    //ARRAYS TIPATS
+    colors : string[] = ['vermell', 'verd', 'blau'];
+    frameworks: string[] = [this.nom, this.nom2];
+    punts : number[] = [10, 15, 20];
+
+    //TypeScrips infereix (adivina) el tipus automàticament
+    ciutat = 'Lleida'; //string
+    codiP = 25605; //number
+
+    //objecte de tipus Producte
+
+    producte: Producte = {
+      id: 1, 
+      nom : 'PC', 
+      preu : 999,
+      estoc : 10,
+      categoria: 'informatica'
+    };
+
+    producte2: Producte = {
+      id: 2,
+      nom: 'Ivan',
+      preu: 5,
+      estoc : 2,
+      categoria: 'jkshda'
+    }
+
+    productes: Producte[] = [this.producte, this.producte2]; 
+
+    p1 = new ProducteClass('Teclat', 89.99);
     
-    const d1 = this.findById(1);
-    if (d1) console.log('Formato bonito:', this.formatarElement(d1));
+    constructor(){
+        console.log(this.p1.toSting());
+        console.log(this.p1.preuAmbIva());
+        console.log(this.p1.toSting());
+    }
 
-    console.log('--- PARTE C: CLASE TORNEO ---');
-    const champions = new Torneo('Champions League', 5000000);
-    console.log(champions.agregarEquipo('FC Barcelona'));
-    console.log('¿Es premio grande (>1M)?', champions.tienePremioGrande(1000000));
-    console.log('Total de equipos inscritos (getter):', champions.totalEquipos);
+    //1. AFEGIU UN MÈTODE A LA CLASSE PRODUCTE descripcio() que retorni un string amb nom i preu
+    //2. MÈTODE descompte() que retorni el preu amb un 10% de rebaixa
+    //3. creeu un nou producte i mostreu el descompte per consola
+    //4. cerqueu la manera de mostrar el descompte amb un popup
+  
+*/
+ciutats: string[] = ['Barcelona', 'Madrid', 'Girona', 'Tarragona'];
 
-    console.log('--- FUNCIONES AUXILIARES ---');
-    console.log(saludar('Eloy'));
-    console.log('¿Es mayor de edad (20)?', esMajorEdat(20));
-    console.log('Suma de [10, 20, 30]:', sumarArray([10, 20, 30]));
-
-    console.log('--- CLASE ALUMNO ---');
-    const alumne1 = new Alumne('Eloy', 20, 'DAW', [7, 8, 9, 6]);
-    const alumne2 = new Alumne('Marc', 17, 'DAM', [3, 4, 2, 5]);
-
-    console.log(alumne1.presentar());
-    console.log(`Nota media de ${alumne1.nom}: ${alumne1.mitjanaNotes} | ¿Aprobado?: ${alumne1.haAprobat}`);
-
-    console.log(alumne2.presentar());
-    console.log(`Nota media de ${alumne2.nom}: ${alumne2.mitjanaNotes} | ¿Aprobado?: ${alumne2.haAprobat}`);
-  }
-
-  getActius(): Deportista[] {
-    return this.deportistas.filter(d => d.activo === true);
-  }
-
-  findById(id: number): Deportista | undefined {
-    return this.deportistas.find(d => d.id === id);
-  }
-
-  formatarElement(element: Deportista): string {
-    const estado = element.activo ? 'En activo' : 'Retirado/a';
-    const equipo = element.equipo ? ` (${element.equipo})` : ' (Sin equipo)';
-    return `[${element.deporte}] ${element.nombre}${equipo} - Dorsal: ${element.dorsal} | Estado: ${estado}`;
-}
-
+productes: Producte [] = [
+  {id: 1, nom : 'teclat', preu : 89.99, estoc : 12, categoria: 'perifèrics'},
+  {id: 2, nom : 'monitor', preu : 350, estoc : 3, categoria: 'pantallezs'},
+  {id: 2, nom : 'monitor', preu : 350, estoc : 3, categoria: 'pantallezs'},
+];
+    
 }
